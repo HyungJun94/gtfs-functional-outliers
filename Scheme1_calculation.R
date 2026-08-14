@@ -24,7 +24,7 @@ NULL
 delta.calculation <- function(xfd, H, N, nbasis, nharm, v.prop){
   # Final delta statistic calculation 
   xfd.sub <- xfd$fd[H]                      # final subset fd objects
-  mean.sub <- mean.fd(xfd.sub)              # mean function estimate 
+  mean.sub <- fda::mean.fd(xfd.sub)              # mean function estimate 
   xfd.c <- xfd                              # e_i = X_i - mu0_hat
   xfd.c$fd$coefs <- xfd.c$fd$coefs - matrix(rep(mean.sub$coefs,N), ncol=N)  # update e_i coefficients
   
@@ -184,7 +184,7 @@ GTFS_scheme1 <- function(x,t,alpha=0.05,n.init=5,iter.max=10,
     tmp.fd <- fda::smooth.basis(t,t(x),fda::fdPar(basis0,2, lambdas[i]))
     gcvs <- c(gcvs, mean(tmp.fd$gcv))
   }
-  mypar <- fdPar(basis0,2, lambda=lambdas[which.min(gcvs)]) 
+  mypar <- fda::fdPar(basis0,2, lambda=lambdas[which.min(gcvs)]) 
   xfd <- fda::smooth.basis(t,t(x),mypar)  # smoothed functional objects 
   
   # initial eigenfunction 

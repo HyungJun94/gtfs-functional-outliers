@@ -122,7 +122,7 @@ Iter.step.C <- function(xfd,N,H,h,nbasis,v.prop=0.9, nharm=10, init.pca, alpha.p
   if(coeffs.type=='practical'){                           # practical scheme : update coefficients (weights) on every H update
     max.scores <- apply(e.c.pc.scores, 2, function(x){max(x^2)})
     max.scores <- max.scores/eval[1:d]
-    cN <- 2*qgumbel(1-alpha.p) + 2*log(N) - log(log(N)) - 2* log(gamma(1-gumbel.cutoff))
+    cN <- 2*ordinal::qgumbel(1-alpha.p) + 2*log(N) - log(log(N)) - 2* log(gamma(1-gumbel.cutoff))
     if( sum(max.scores> cN)  == 0){
       coeffs <- c(max.scores == max(max.scores))
     }else{
@@ -191,7 +191,7 @@ GTFS <- function(x,t,alpha=0.05, alpha.p=0.2,n.init=5,iter.max=10,
   lambdas <- 10^(-(1:10))  # regularization parameter
   gcvs <- c()              # Generalized Cross Validation Scores
   for(i in 1:10){
-    tmp.fd <- fda::smooth.basis(t,t(x),fdPar(basis0,2, lambdas[i]))
+    tmp.fd <- fda::smooth.basis(t,t(x),fda::fdPar(basis0,2, lambdas[i]))
     gcvs <- c(gcvs, mean(tmp.fd$gcv))
   }
   mypar <- fda::fdPar(basis0,2, lambda=lambdas[which.min(gcvs)]) 
