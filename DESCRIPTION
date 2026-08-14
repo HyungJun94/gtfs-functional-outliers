@@ -14,4 +14,5 @@ RoxygenNote: 7.3.3
 Imports: 
     fda,
     fields,
-    mvtnorm
+    mvtnorm,
+    plotly
