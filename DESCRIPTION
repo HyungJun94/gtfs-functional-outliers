@@ -7,7 +7,11 @@ Authors@R:
     person("KH Arlene", "Kim", role = "ctb", email = "arlenent@korea.ac.kr")
     )
 Description: Implementation and simulation workflows for detecting functional shape outliers via GTFS method as described in the manuscript.
-License:  MIT + file LICENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Imports: 
+    fda,
+    fields,
+    mvtnorm
