@@ -1,7 +1,7 @@
 #' Generalized Trimmed Functional Score (GTFS)
 #'
 #' This file contains the implementation of the GTFS algorithm 
-#' for robust functional outlier detection.
+#' for functional shape outlier detection.
 #'
 #' @author Hyungjun Lim
 #' @import fda
@@ -13,16 +13,17 @@ NULL
 #' C-statistic Calculation for GTFS
 #'
 #' @param xfd input matrix converted into fd object
-#' @param H subset index
+#' @param H subset indice
 #' @param N sample size
 #' @param nbasis number of basis functions for smoothing
 #' @param nharm number of eigenfunctions to be estimated in FPCA
 #' @param adjust eigenvalue adjustment described in the manuscript
+#' @param re.adjust additional adjustment option
 #' @param v.prop proportion of total variation expected to be explained by d eigenfunctions
 #' @param alpha.p Gumbel quantile for selection cutoff
 #' @param gumbel.cutoff sample size dependent gumbel cutoff value described in the manuscript
 #' 
-#' @return A list containing the statistic (delta.H), number of incorporated eigenfunctions (d), FPCA raw result (e.c.pc), and number of selected eigenfunctions (dd).
+#' @return A list containing the calculated scores (delta.H), number of incorporated eigenfunctions (d), FPCA raw result (e.c.pc), and number of selected eigenfunctions (dd).
 #' @export
 C.calculation <- function(xfd, H, N, nbasis, nharm, adjust=T, re.adjust=F , v.prop, alpha.p=0.2, gumbel.cutoff=0.01){
   # Final delta statistic calculation 
@@ -81,8 +82,8 @@ C.calculation <- function(xfd, H, N, nbasis, nharm, adjust=T, re.adjust=F , v.pr
 #' Iteration step function 
 #'
 #' @param xfd input matrix converted into fd object
-#' @param H subset index
 #' @param N sample size
+#' @param H subset index
 #' @param h subset size 
 #' @param nbasis number of basis functions for smoothing
 #' @param v.prop proportion of total variation expected to be explained by d eigenfunctions
@@ -93,7 +94,7 @@ C.calculation <- function(xfd, H, N, nbasis, nharm, adjust=T, re.adjust=F , v.pr
 #' @param init.coeffs initial selection coefficients
 #' @param coeffs.type 'practical' for GTFS(P) and 'algorithm' for GTFS
 #'  
-#' @return A list containing the clean subset indices (H1), sum of calculated statistics (sum.delta.H), calculated statistics (delta.H), and selection coefficients (coeffs)
+#' @return A list containing the clean subset indices (H1), sum of calculated scores (sum.delta.H), calculated scores (delta.H), and selection coefficients (coeffs)
 #' @export
 Iter.step.C <- function(xfd,N,H,h,nbasis,v.prop=0.9, nharm=10, init.pca, alpha.p=0.2, gumbel.cutoff=0.01, 
                         init.coeffs=NULL, coeffs.type='practical'){
