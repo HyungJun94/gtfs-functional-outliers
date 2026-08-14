@@ -15,4 +15,5 @@ Imports:
     fda,
     fields,
     mvtnorm,
+    ordinal,
     plotly
