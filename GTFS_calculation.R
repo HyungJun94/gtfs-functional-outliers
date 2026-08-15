@@ -23,7 +23,11 @@ NULL
 #' @param alpha.p Gumbel quantile for selection cutoff
 #' @param gumbel.cutoff sample size dependent gumbel cutoff value described in the manuscript
 #' 
-#' @return A list containing the calculated scores (delta.H), number of incorporated eigenfunctions (d), FPCA raw result (e.c.pc), and number of selected eigenfunctions (dd).
+#' @return A list containing:
+#' \item{delta.H}{Numeric vector of the calculated robust outlyingness scores for all N observations.}
+#' \item{d}{Integer. The number of principal components explaining the pre-specified proportion of total variation.}
+#' \item{fpca}{The raw Functional Principal Component Analysis (FPCA) object returned from \code{pca.fd}.}
+#' \item{dd}{Integer. The number of filtered/selected eigenfunctions after thresholding with the Gumbel cutoff.}
 #' @export
 C.calculation <- function(xfd, H, N, nbasis, nharm, adjust=T, re.adjust=F , v.prop, alpha.p=0.2, gumbel.cutoff=0.01){
   # Final delta statistic calculation 
@@ -94,7 +98,11 @@ C.calculation <- function(xfd, H, N, nbasis, nharm, adjust=T, re.adjust=F , v.pr
 #' @param init.coeffs initial selection coefficients
 #' @param coeffs.type 'practical' for GTFS(P) and 'algorithm' for GTFS
 #'  
-#' @return A list containing the clean subset indices (H1), sum of calculated scores (sum.delta.H), calculated scores (delta.H), and selection coefficients (coeffs)
+#' @return A list containing:
+#' \item{H1}{Integer vector containing the updated subset indices of size h with the smallest sum of delta.}
+#' \item{sum.delta.H}{Numeric. The sum of outlyingness scores within the updated subset H1.}
+#' \item{delta.H}{Numeric vector of the updated outlyingness scores for all N observations.}
+#' \item{coeffs}{Numeric vector of the updated weights/coefficients applied to each eigenfunction score.}
 #' @export
 Iter.step.C <- function(xfd,N,H,h,nbasis,v.prop=0.9, nharm=10, init.pca, alpha.p=0.2, gumbel.cutoff=0.01, 
                         init.coeffs=NULL, coeffs.type='practical'){
@@ -157,6 +165,16 @@ Iter.step.C <- function(xfd,N,H,h,nbasis,v.prop=0.9, nharm=10, init.pca, alpha.p
 #' @param coeffs.type 'practical' for GTFS(P) and 'algorithm' for GTFS
 #'  
 #' @return A list containing the clean subset (H2), calculated statistic (delta.H), sum of calculated statistics (delta.sum), indices labeled outliers (outlier), cutoff value (cutoff), density estimate for statistic (density), number of used and selected eigenfunctions (d & dd), and number of iteration (step.iter).
+#' @return A list containing:
+#' \item{H2}{Integer vector. The final optimized clean subset indices of size h used for robust estimation.}
+#' \item{delta.H}{Numeric vector. The calculated robust functional outlyingness scores for all N observations.}
+#' \item{delta.sum}{Numeric. The minimized sum of outlyingness statistics within the final clean subset.}
+#' \item{outliers}{Integer vector. The final detected outlier indices whose scores exceed the cutoff threshold.}
+#' \item{cutoff}{Numeric. The theoretical outlier detection threshold determined by the Chi-Square distribution.}
+#' \item{density}{Numeric vector. The density estimate for the outlyingness statistics used for empirical distribution tracking.}
+#' \item{d}{Integer. The original number of estimated eigenfunctions explaining the pre-specified variation proportion.}
+#' \item{dd}{Integer. The reduced number of filtered eigenfunctions actively used after Gumbel thresholding.}
+#' \item{step.iter}{Integer. The number of concentration iterations taken until the subset convergence criteria was met.}
 #' @export
 GTFS <- function(x,t,alpha=0.05, alpha.p=0.2,n.init=5,iter.max=10,
                  basis='bspline', nbasis=31,
