@@ -41,7 +41,7 @@ add_intercept <- function(tmp, method='uniform') {
   return(out)
 }
 
-#' Perform Integral Centering on Functional Data
+#' Perform quick Integral Centering on Functional Data (non-smoothed ver.)
 #'
 #' @param X Matrix. N x p matrix of functional data.
 #' @return Centered functional matrix.

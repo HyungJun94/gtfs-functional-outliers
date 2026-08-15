@@ -1,7 +1,7 @@
 #' Least Trimmed Functional Score (LTFS) Benchmark Toolkit
 #'
 #' This file contains the official benchmark implementation of the LTFS algorithm
-#' for functional outlier detection, as proposed by Ren, Chen, and Zou (2017).
+#' for functional outlier detection, as proposed by Ren, et. al. (2017) Biometrika.
 #'
 #' @author Ren, Haojie, Nan Chen, and Changliang Zou
 #' @import QRM
