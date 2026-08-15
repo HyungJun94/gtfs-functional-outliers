@@ -61,7 +61,9 @@ delta.calculation <- function(xfd, H, N, nbasis, nharm, v.prop){
 #' @param adjust eigenvalue adjustment described in the manuscript
 #' @param re.adjust additional adjustment option
 #' 
-#' @return list containing the cutoff value and the density estimate for the scores
+#' @return A list containing:
+#' \item{cutoff}{Numeric. The theoretical outlier detection threshold determined by the Chi-Square distribution.}
+#' \item{density}{Numeric vector. The density estimate for the outlyingness statistics used for empirical distribution tracking.}
 #' @export
 find_cutoff <- function(r, ec.pc , alpha, delta.H, H, adjust=T, re.adjust=F){
   
