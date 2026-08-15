@@ -19,7 +19,11 @@ NULL
 #' @param nharm number of eigenfunctions to be estimated in FPCA
 #' @param v.prop proportion of total variation expected to be explained by d eigenfunctions
 #' 
-#' @return A list containing the statistic (delta.H), number of incorporated eigenfunctions (r), FPCA raw result (fpca), and integral-centered function (e.c).
+#' @return A list containing:
+#' \item{delta.H}{Numeric vector of the calculated robust outlyingness scores for all N observations.}
+#' \item{r}{Integer. The number of principal components explaining the pre-specified proportion of total variation.}
+#' \item{fpca}{The raw Functional Principal Component Analysis (FPCA) object returned from \code{pca.fd}.}
+#' \item{e.c}{Centered functions}
 #' @export
 delta.calculation <- function(xfd, H, N, nbasis, nharm, v.prop){
   # Final delta statistic calculation 
@@ -109,7 +113,10 @@ find_cutoff <- function(r, ec.pc , alpha, delta.H, H, adjust=T, re.adjust=F){
 #' @param nharm number of eigenfunctions to be estimated in FPCA
 #' @param init.pca initial FPCA estimates 
 #'  
-#' @return A list containing the clean subset indices (H1), sum of calculated scores (sum.delta.H), calculated scores (delta.H).
+#' @return A list containing:
+#' \item{H1}{Integer vector containing the updated subset indices of size h with the smallest sum of delta.}
+#' \item{sum.delta.H}{Numeric. The sum of outlyingness scores within the updated subset H1.}
+#' \item{delta.H}{Numeric vector of the updated outlyingness scores for all N observations.}
 #' @export
 Iter.step.delta <- function(xfd,N,H,h,nbasis,v.prop=0.9, nharm=10, init.pca){
 
@@ -156,7 +163,12 @@ Iter.step.delta <- function(xfd,N,H,h,nbasis,v.prop=0.9, nharm=10, init.pca){
 #' @param nharm number of eigenfunctions to be estimated in FPCA
 #' @param refined whether to conduct one-step refinement described in manuscript 
 #'  
-#' @return A list containing the clean subset (H), calculated statistic (delta.H), indices labeled outliers (outlier), cutoff value (cutoff), density estimate for scores (density).
+#' @return A list containing:
+#' \item{H}{Integer vector. The final optimized clean subset indices of size h used for robust estimation.}
+#' \item{delta.H}{Numeric vector. The calculated robust functional outlyingness scores for all N observations.}
+#' \item{outliers}{Integer vector. The final detected outlier indices whose scores exceed the cutoff threshold.}
+#' \item{cutoff}{Numeric. The theoretical outlier detection threshold determined by the Chi-Square distribution.}
+#' \item{density}{Numeric vector. The density estimate for the outlyingness statistics used for empirical distribution tracking.}
 #' @export
 GTFS_scheme1 <- function(x,t,alpha=0.05,n.init=5,iter.max=10,
                          basis='bspline', nbasis=31,
