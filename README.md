@@ -11,10 +11,8 @@ This repository provides the official R package implementation and simulation to
 The project is structured as a standard R package environment coupled with workflow and reproducibility scripts:
 
 ### Core Package Functions (`R/`)
-*   **`GTFS_calculation.R`**: Core implementation of the proposed GTFS algorithm and C-statistic calculations.
+*   **`GTFS_main.R`**: Core implementation of the proposed GTFS algorithms and C-statistic calculations.
 *   **`LTFS_calculation.R`**: Wrapper for the benchmark LTFS pipeline.
-*   **`Scheme1_calculation.R`**: Implementation of GTFS Scheme 1.
-*   **`Scheme2_calculation.R`**: Implementation of GTFS Scheme 2.
 *   **`add_intercept_add_centering.R`**: Preprocessing utilities for handling data centering and adaptive random intercepts.
 *   **`plotting_utils.R`**: Visualization suites for functional curves contaminated with outliers.
 *   **`simulation_generators.R`**: Synthetic functional shape outlier data generation engines (`simul_1` to `simul_6`).
