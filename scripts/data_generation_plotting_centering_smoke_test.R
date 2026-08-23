@@ -21,8 +21,3 @@ plot_mod(X$raw, main = 'Jump Outliers', n = n, c = c)
 # 2. Add random intercept
 X.RI <- add_intercept(X, method = 'uniform')
 plot_mod(X.RI$raw, main = 'With Random Intercept', n = n, c = c)
-
-# 3. Integral centering 
-X.IC  <- integral_centering(X.RI$raw)
-plot_mod(X.IC, main = 'Integral-centered peak outliers',
-         n=n, c=c)
