@@ -193,87 +193,95 @@ Sim.shape.outlier <- function(N=200,p=50,cont=0.025,
       
       ########################################################
       
-      gumbel.cutoff = 1/sqrt(N)*2
-      
       # GTFS scheme 1 [0.05]
-      trial0 <- GTFS_scheme1(x,t,alpha=0.05,n.init=10,iter.max=10,
-                             basis='bspline', nbasis=31,
-                             v.prop=0.9, nharm=15,
-                             refined=T)
+      trial0 <- GTFS_outlier(scheme='scheme1',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.05, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'scheme1 0.05')
+      method.names <- c(method.names, 'scheme10.05')
       #print('new 0.05')
       
       # GTFS scheme 1 [0.01]
-      trial0 <- GTFS_scheme1(x,t,alpha=0.01,n.init=10,iter.max=10,
-                             basis='bspline', nbasis=31,
-                             v.prop=0.9, nharm=15,
-                             refined=T)
+      trial0 <- GTFS_outlier(scheme='scheme1',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.01, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'scheme1 0.01')
+      method.names <- c(method.names, 'scheme10.01')
       #print('new 0.01')
       
       ########################################################
       
       # GTFS scheme 2 [0.05]
-      trial0 <- GTFS_scheme2(x,t,alpha=0.05,n.init=10,iter.max=10,
-                             basis='bspline', nbasis=31,
-                             v.prop=0.9, nharm=15,
-                             refined=T)
+      trial0 <- GTFS_outlier(scheme='scheme2',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.05, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'scheme2 0.05')
+      method.names <- c(method.names, 'scheme20.05')
       #print('new 0.05')
       
       # GTFS scheme 2 [0.01]
-      trial0 <- GTFS_scheme2(x,t,alpha=0.01,n.init=10,iter.max=10,
-                             basis='bspline', nbasis=31,
-                             v.prop=0.9, nharm=15,
-                             refined=T)
+      trial0 <- GTFS_outlier(scheme='scheme2',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.01, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'scheme2 0.01')
+      method.names <- c(method.names, 'scheme20.01')
       #print('new 0.01')
       
       
       ########################################################
       
       # GTFS (Algorithm 1) [0.05]
-      trial0 <- TRIAL.fd.C(x,t,alpha=0.05, alpha.p= gumbel.cutoff,n.init=10,iter.max=10,
-                           basis='bspline', nbasis=31,
-                           v.prop=0.9, nharm=15,
-                           refined=T, 
-                           coeffs.type = 'algorithm')
+      trial0 <- GTFS_outlier(scheme='GTFS',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.05, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'GTFS 0.05')
+      method.names <- c(method.names, 'GTFS0.05')
       #print('new 0.01')
       
       iteration.mat[i,1] <- trial0$step.iter
       
       # GTFS (Algorithm 1) [0.01]
-      trial0 <- TRIAL.fd.C(x,t,alpha=0.01, alpha.p= gumbel.cutoff,n.init=10,iter.max=10,
-                           basis='bspline', nbasis=31,
-                           v.prop=0.9, nharm=15,
-                           refined=T,
-                           coeffs.type = 'algorithm')
+      trial0 <- GTFS_outlier(scheme='GTFS',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.01, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'GTFS 0.01')
+      method.names <- c(method.names, 'GTFS0.01')
       #print('new 0.01')
       
       iteration.mat[i,2] <- trial0$step.iter
@@ -281,35 +289,38 @@ Sim.shape.outlier <- function(N=200,p=50,cont=0.025,
       ########################################################
       
       # GTFS (practical ver.) [0.05]
-      trial0 <- TRIAL.fd.C(x,t,alpha=0.05, alpha.p= gumbel.cutoff,n.init=10,iter.max=10,
-                           basis='bspline', nbasis=31,
-                           v.prop=0.9, nharm=15,
-                           refined=T,
-                           coeffs.type = 'practical')
+      trial0 <- GTFS_outlier(scheme='GTFS(P)',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.05, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'GTFS.P 0.05')
+      method.names <- c(method.names, 'GTFS(P)0.05')
       #print('new 0.01')
       
       iteration.mat[i,3] <- trial0$step.iter
       
       
       # GTFS (practical ver.) [0.01]
-      trial0 <- TRIAL.fd.C(x,t,alpha=0.01, alpha.p= gumbel.cutoff,n.init=10,iter.max=10,
-                           basis='bspline', nbasis=31,
-                           v.prop=0.9, nharm=15,
-                           refined=T,
-                           coeffs.type = 'practical')
+      trial0 <- GTFS_outlier(scheme='GTFS(P)',
+                             x,t, 
+                             basis='bspline', nbasis=31, nharm=20, 
+                             v.prop=0.9,alpha=0.01, q.star='default',
+                             n.init=5,iter.max=10,
+                             refined = T)  
       out.temp <- trial0$outlier
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
       ACC.temp <- c(ACC.temp, (sum(out.temp %in% oind) + (N*(1-cont))- sum(!(out.temp %in% oind)) )/N)
-      method.names <- c(method.names, 'GTFS.P 0.01')
+      method.names <- c(method.names, 'GTFS(P)0.01')
       #print('new 0.01')
       
       iteration.mat[i,4] <- trial0$step.iter
+      
       
       
       
@@ -356,11 +367,11 @@ system.time(
 
 
 
-models <- c('FOBox', 'RMD','ISE','Outgram','TVS(MSS)',
-            'MUOD(shape)','MUOD(amp)','LTFS','LTFS(RE)',
-            'scheme1 0.05', 'scheme1 0.01', 'scheme2 0.05', 'scheme2 0.01',
-            'GTFS 0.05', 'GTFS 0.01', 'GTFS.P 0.05', 'GTFS.P 0.01')
 
+models <- c('FOBox', 'RMD','ISE','Outliergram','TVS(MSS)',
+            'MUOD(shape)','MUOD(amp)','LTFS','LTFS.re',
+            'scheme10.05', 'scheme10.01', 'scheme20.05', 'scheme20.01',
+            'GTFS0.05', 'GTFS0.01', 'GTFS(P)0.05', 'GTFS(P)0.01')
 
 ###########################################################################
 # To table
