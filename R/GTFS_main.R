@@ -10,6 +10,76 @@
 NULL
 
 
+#' Preprocessing for GTFS including integral centering
+#'
+#' @param x N x p functional data
+#' @param t sampling time grid points
+#' @param basis  smoothing basis ('bspline' or 'fourier')
+#' @param nbasis number of basis functions for smoothing
+#' 
+#' @return A list containing:
+#' \item{xfd}{x converted into fd object}
+#' \item{x.ic}{Matrix. xfd curves evaluated on measurement points t}
+#' @export
+gtfs_preprocess <- function(x, t, basis='bspline', nbasis=20){
+ 
+  # scaling (for convenience) 
+  x <- x/sd(x)
+  
+  # Dataset size & settings
+  N <- nrow(x)           # number of obs in the data 
+  p <- length(t)         # number of observations per functional object
+  
+  # convert to fd object (basis function selection)
+  if(basis=='bspline'){
+    basis0 <- create.bspline.basis(c(0,1), nbasis=nbasis)
+  }else if(basis=='fourier'){
+    basis0 <- create.fourier.basis(c(0,1), nbasis=nbasis)
+  }
+  
+  # smoothness penalty grid search
+  lambdas <- 10^(-(1:10))  # regularization parameter
+  gcvs <- c()              # Generalized Cross Validation Scores
+  for(i in 1:10){
+    tmp.fd <- smooth.basis(t,t(x),fdPar(basis0,2, lambdas[i]))
+    gcvs <- c(gcvs, mean(tmp.fd$gcv))
+  }
+  mypar <- fdPar(basis0, 2, lambda=lambdas[which.min(gcvs)]) 
+  xfd <- smooth.basis(t,t(x),mypar)  # smoothed functional objects 
+  
+  
+  ###############################################################
+  
+  # integral centering 
+  x.int <- fda::inprod(xfd$fd)                           # vector containing <e_i,1> for all i=1,...,N
+  xfd$fd$coefs <- xfd$fd$coefs - matrix(rep(x.int,rep(nbasis,N)),ncol=N)  # update centered e_i coefficients
+  
+  
+  # integral centering
+  #rangeval <- xfd$fd$basis$rangeval  # 0 1
+  #interval.length <- diff(rangeval)  # 1
+  
+  #basis.c <- create.constant.basis(rangeval) # constant basis for mean function
+  #fd.const <- fd(matrix(1,1,1), basis.c)     # 1 everywhere
+  
+  #x.int <- fda::inprod(xfd$fd)           # <the ith curve, 1>
+  #curve.int <- x.int/interval.length     # divided by range
+  #curve.int.fd <- fd(matrix(curve.int, 1,N), basis.c)  # N constant functions
+  
+  #xfd$fd <- xfd$fd - curve.int.fd   # integral-centering
+  
+  ###############################################################
+  
+  # back to matrix form 
+  x.ic <- t(eval.fd(t, xfd$fd))
+  
+  # output 
+  out <- list(xfd = xfd, x.ic = x.ic)
+  return(out)
+}
+
+
+
 #' C-statistic Calculation for GTFS
 #'
 #' @param scheme GTFS variants selection ('GTFS', 'GTFS(P)', 'scheme1', 'scheme2')
