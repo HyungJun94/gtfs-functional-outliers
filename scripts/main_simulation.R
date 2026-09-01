@@ -35,11 +35,15 @@ library(coga)  # for cutoff of out method
 #' 
 #' Contamination ratio (cont) can be specified to reproduce the results in Section 3, Subsection 3.1 and 3.2. 
 #'
+#' By adding no subject-wise intercept (intercept=F), results in Section 3, Subsection 3.2 is reproduced.
+#'
 #' @param N Integer. Sample size.
 #' @param p Integer. Number of time points.
 #' @param cont Numeric. Contamination ratio.
 #' @param N_sim Integer. Number of simulation iterations.
+#' @param N_method Integer. Number of methods being compared.
 #' @param outlier_type Character. Outlier model scenario ('Peak', 'Jump', etc.)
+#' @param smooth Logical. Whether to smooth the curves. 
 #' @param intercept Logical. Whether to add random intercept.
 #' @export
 Sim.shape.outlier <- function(N=200,p=50,cont=0.025,
