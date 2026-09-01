@@ -32,6 +32,8 @@ library(FUNTA)
 library(coga)  # for cutoff of out method
 
 #' Simulation Run Function for Shape Outliers
+#' 
+#' Contamination ratio (cont) can be specified to reproduce the results in Section 3, Subsection 3.1 and 3.2. 
 #'
 #' @param N Integer. Sample size.
 #' @param p Integer. Number of time points.
