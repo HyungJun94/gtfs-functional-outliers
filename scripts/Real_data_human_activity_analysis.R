@@ -38,13 +38,13 @@ table(lab0)
 
 set.seed(1)
 for(type in 1:3){
-  N = 100
+  N = 400
   cont = 0.05
   p = 128
   t <- seq(0,1,len=p)
   
   
-  N_sim = 10
+  N_sim = 100
   N_method = 4
   
   TPR.mat <- matrix(0,nrow=N_sim,ncol=N_method)
