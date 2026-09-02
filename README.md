@@ -40,3 +40,5 @@ devtools::install_github("HyungJun94/gtfs-functional-outliers")
 
 *   **LTFS**: Ren, H., Chen, N., & Zou, C. (2017). Projection-based outlier detection in functional data. *Biometrika*, 104(2), 411-423.
 *   **MDP/ReMDP**: Ro, K., Zou, C., Wang, Z., & Yin, G. (2015). Outlier detection for high-dimensional data. *Biometrika*, 102(3), 589–599.
+*   **Human Activity Recognition**: Reyes-Ortiz, J., Anguita, D., Ghio, A., Oneto, L., & Parra, X. (2013). Human Activity Recognition Using Smartphones [Dataset]. *UCI Machine Learning Repository*. 
+*   **Tecator**: Ferraty, F. and Vieu, P. (2006) *Nonparametric functional data analysis*, Springer Series in Statistics, New York.
