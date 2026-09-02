@@ -21,6 +21,8 @@ The project is structured as a standard R package environment coupled with workf
 *   **`GTFS_analysis_example.R`**: Step-by-step tutorial demonstrating GTFS analysis pipelines.
 *   **`data_generation_plotting_centering_smoke_test.R`**: Comprehensive pipeline validation and graphing test runner.
 *   **`main_simulation.R`**: Full-scale multi-iteration simulation script benchmarking empirical power.
+*   **`Real_data_human_activity_analysis.R`**: Real data application on human activity recognition data.
+*   **`Real_data_tecator_analysis.R`**: Real data application on Tecator data.
 
 ---
 
