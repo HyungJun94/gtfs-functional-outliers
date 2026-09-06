@@ -356,11 +356,27 @@ Sim.shape.outlier <- function(N=200,p=50,cont=0.025,
 ###########################################################################
 # full simulation
 
-# simulation for rho = 0.025
+# main simulation
 set.seed(1)
 system.time(
   for(N in c(200,600,1000)){
-    for(r in c(0.025)){
+    for(r in c(0.025, 0.05, 0.1)){
+      Sim.shape.outlier(N=N,p=50,cont=r,
+                        N_sim=100,N_method=17,
+                        outlier_type=c('Peak','Jump',
+                                       'Slope1','Slope2',
+                                       'Phase','Frequency'),
+                        smooth=F,seed=10, intercept = T)
+    }
+  }
+)
+
+
+# high-contamination 
+set.seed(1)
+system.time(
+  for(N in c(200,600,1000)){
+    for(r in c(0.2, 0.3, 0.4)){
       Sim.shape.outlier(N=N,p=50,cont=r,
                         N_sim=100,N_method=17,
                         outlier_type=c('Peak','Jump',
@@ -374,13 +390,34 @@ system.time(
 
 
 
+# reduced-variation
+set.seed(1)
+system.time(
+  for(N in c(200,600,1000)){
+    for(r in c(0.025, 0.05, 0.1)){
+      Sim.shape.outlier(N=N,p=50,cont=r,
+                        N_sim=100,N_method=17,
+                        outlier_type=c('Peak','Jump',
+                                       'Slope1','Slope2',
+                                       'Phase','Frequency'),
+                        smooth=F,seed=10, intercept = F)
+    }
+  }
+)
+
+
+
+###########################################################################
+# Table generation
+
+
 models <- c('FOBox', 'RMD','ISE','Outliergram','TVS(MSS)',
             'MUOD(shape)','MUOD(amp)','LTFS','LTFS.re',
             'scheme10.05', 'scheme10.01', 'scheme20.05', 'scheme20.01',
             'GTFS0.05', 'GTFS0.01', 'GTFS(P)0.05', 'GTFS(P)0.01')
 
-###########################################################################
-# To table
+
+
 
 for(N in c(200,600,1000)){
   for(r in c(0.025,0.05,0.1)){
