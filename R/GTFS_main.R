@@ -6,6 +6,7 @@
 #' @author Hyungjun Lim
 #' @import fda
 #' @import ordinal
+#' @import coga
 #' @name GTFS_core
 NULL
 
