@@ -192,10 +192,6 @@ GTFS_only_outliers <-   method_out[['GTFS']] [  -which( method_out[['GTFS']] %in
 GTFS_only_outliers
 
 
-temp.num <- length(GTFS_only_outliers)
-
-num_gtfs_only <- c(num_gtfs_only, temp.num)
-
 
 ###########################################################################
 # Plot
@@ -223,6 +219,18 @@ curve_long
 
 ##########################
 # Figure 5-1.
+
+
+mean_gtfs <- curve_long %>%
+  filter(GTFS_selected)  %>%
+  group_by(wavelength)  %>%
+  summarise(mean_value = mean(value), .groups = "drop")
+
+mean_rest <- curve_long  %>%
+  filter(!GTFS_selected)  %>%
+  group_by(wavelength) %>%
+  summarise(mean_value = mean(value), .groups = "drop")
+
 
 fig_51 <- ggplot() +
   geom_line(
@@ -301,6 +309,7 @@ dat2 <- data.frame(id = 1:nrow(x),
 dat2 <- as.tibble(dat2)
 dat2
 
+primary_gtfs <- trial0
 
 score_vec <- primary_gtfs$score.H
 if (is.null(score_vec)) score_vec <- rep(NA_real_, N)
