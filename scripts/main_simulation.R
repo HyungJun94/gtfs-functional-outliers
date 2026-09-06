@@ -35,7 +35,7 @@ library(coga)  # for cutoff of out method
 #' 
 #' Contamination ratio (cont) can be specified to reproduce the results in Section 3, Subsection 3.1 and 3.2. 
 #'
-#' By adding no subject-wise intercept (intercept=F), results in Section 3, Subsection 3.2 is reproduced.
+#' By adding no subject-wise intercept (intercept=F), results in Section 3, Subsection 3.3 is reproduced.
 #'
 #' @param N Integer. Sample size.
 #' @param p Integer. Number of time points.
@@ -169,7 +169,7 @@ Sim.shape.outlier <- function(N=200,p=50,cont=0.025,
       }else if(is.atomic(muod1$outliers) ==T){
         out.temp <- NULL
       }else{
-        out.temp <- muod1$outliers$shape
+        out.temp <- muod1$outliers$amplitude
       }
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
