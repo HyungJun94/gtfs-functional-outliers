@@ -189,7 +189,6 @@ Sim.shape.outlier <- function(N=200,p=50,cont=0.025,
       #print('ltfs s')
       
       # Least Trimmed Functional Set [Refined]
-      LTFS1 <- LTFS_outlier(x,N,p,15,'bspline',0.05,F)
       out.temp <- LTFS1$refined
       TPR.temp <- c(TPR.temp, sum(out.temp %in% oind)/(N*cont))
       FPR.temp <- c(FPR.temp, (length(out.temp)-sum(out.temp %in% oind))/(N*(1-cont))  )
